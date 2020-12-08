@@ -5,8 +5,9 @@ class Item < ApplicationRecord
   has_one_attached :image
 
   validates :image, :name, :text, :user, presence: true
-  validates :price, format: { with: /\A[0-9]+\z/, message: 'Half-width number' },
-            numericality:{ greater_than: 300, less_than: 9999999, message: "Out of setting range" }, presence: true
+  validates :price, format: { with: /\A(?=.*?\d)\d+\z/i, message: 'Include both letters and numbers' },
+                    numericality: { greater_than: 299, less_than: 9_999_999, message: 'Out of setting range' }, presence: true
+
   validates :category_id, :condition_id, :delivery_fee_id, :prefecture_id, :days_id,
-            numericality: { other_than: 1,message: "select" }
+            numericality: { other_than: 1, message: 'select' }
 end
