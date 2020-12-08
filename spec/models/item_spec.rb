@@ -23,10 +23,20 @@ RSpec.describe Item, type: :model do
         @item.valid?
         expect(@item.errors.full_messages).to include("Name can't be blank")
       end
+      it 'nameが41文字以上では出品できない' do
+        @item.name = Faker::Lorem.characters(number:41)
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Name is too long (maximum is 40 characters)")
+      end
       it 'textが空では出品できない' do
         @item.text = ''
         @item.valid?
         expect(@item.errors.full_messages).to include("Text can't be blank")
+      end
+      it 'textが1001文字以上では出品できない' do
+        @item.text = Faker::Lorem.characters(number:1001)
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Text is too long (maximum is 1000 characters)")
       end
       it 'categoryが選択されていないと出品できない' do
         @item.category_id = 1
@@ -69,7 +79,7 @@ RSpec.describe Item, type: :model do
         expect(@item.errors.full_messages).to include('Price Out of setting range')
       end
       it 'priceが9999999を超えると出品できない' do
-        @item.price = 10_000_000
+        @item.price = 10000000
         @item.valid?
         expect(@item.errors.full_messages).to include('Price Out of setting range')
       end
