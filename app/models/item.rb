@@ -1,6 +1,11 @@
 class Item < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
-  belongs_to :category, :condition, :delivery_fee, :prefecture, :day
+  belongs_to :category
+  belongs_to :condition
+  belongs_to :delivery_fee
+  belongs_to :prefecture
+  belongs_to :day
+  
   belongs_to :user
   has_one_attached :image
 
@@ -15,7 +20,7 @@ class Item < ApplicationRecord
       validates :condition_id
       validates :delivery_fee_id
       validates :prefecture_id
-      validates :days_id
+      validates :day_id
     end
   end
 end
