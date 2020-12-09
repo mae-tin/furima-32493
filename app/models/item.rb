@@ -9,7 +9,7 @@ class Item < ApplicationRecord
     validates :name, length: { maximum: 40 }
     validates :text, length: { maximum: 1000 }
     validates :price, format: { with: /\A(?=.*?\d)\d+\z/i, message: 'Half-width number' },
-                      numericality: { greater_than: 299, less_than: 9999999, message: 'Out of setting range' }                  
+                      numericality: { greater_than: 299, less_than: 9_999_999, message: 'Out of setting range' }
     with_options numericality: { other_than: 1, message: 'select' } do
       validates :category_id
       validates :condition_id
@@ -17,6 +17,5 @@ class Item < ApplicationRecord
       validates :prefecture_id
       validates :days_id
     end
-  end  
+  end
 end
-
