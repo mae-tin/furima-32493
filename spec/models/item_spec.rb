@@ -4,7 +4,6 @@ RSpec.describe Item, type: :model do
   describe '商品出品機能' do
     before do
       @item = FactoryBot.build(:item)
-      binding.pry
     end
 
     context '商品出品が成功するとき' do

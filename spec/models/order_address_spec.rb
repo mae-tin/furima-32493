@@ -52,7 +52,7 @@ RSpec.describe OrderAddress, type: :model do
         expect(@order_address.errors.full_messages).to include("Phone number can't be blank")
       end
       it 'phone_numberが半角数値のみでないと保存できない' do
-        @order_address.phone_number = ''
+        @order_address.phone_number = '０９０１１１１２２２２'
         @order_address.valid?
         expect(@order_address.errors.full_messages).to include('Phone number Input correctly')
       end
@@ -61,7 +61,7 @@ RSpec.describe OrderAddress, type: :model do
         @order_address.valid?
         expect(@order_address.errors.full_messages).to include("User can't be blank")
       end
-      it 'item_idが半角数値のみでないと保存できない' do
+      it 'item_idが紐づいていないと保存できない' do
         @order_address.item_id = nil
         @order_address.valid?
         expect(@order_address.errors.full_messages).to include("Item can't be blank")
