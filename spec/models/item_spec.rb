@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Item, type: :model do
-  describe '商品出品' do
+  describe '商品出品機能' do
     before do
       @item = FactoryBot.build(:item)
     end
@@ -59,9 +59,9 @@ RSpec.describe Item, type: :model do
         expect(@item.errors.full_messages).to include('Prefecture select')
       end
       it 'daysが選択されていないと出品できない' do
-        @item.days_id = 1
+        @item.day_id = 1
         @item.valid?
-        expect(@item.errors.full_messages).to include('Days select')
+        expect(@item.errors.full_messages).to include('Day select')
       end
       it 'priceが空では出品できない' do
         @item.price = ''

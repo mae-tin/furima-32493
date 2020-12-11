@@ -1,9 +1,10 @@
 class ItemsController < ApplicationController
   before_action :move_to_index, except: [:index, :show]
   before_action :set_item, only: [:show, :edit, :update, :destroy]
+  before_action :redirect_check, only: [:edit, :destroy]
 
   def index
-    @items = Item.includes(:user).order('created_at DESC')
+    @items = Item.includes(:user, :order).order('created_at DESC')
   end
 
   def new
@@ -23,7 +24,6 @@ class ItemsController < ApplicationController
   end
 
   def edit
-    check_user(@item.user.id)
   end
 
   def update
@@ -35,9 +35,7 @@ class ItemsController < ApplicationController
   end
 
   def destroy
-    if current_user.id != @item.user.id
-      redirect_to root_path
-    elsif @item.destroy
+    if @item.destroy
       redirect_to root_path
     else
       render :show
@@ -55,8 +53,8 @@ class ItemsController < ApplicationController
                                  :prefecture_id, :day_id, :price, :image).merge(user_id: current_user.id)
   end
 
-  def check_user(user_id)
-    redirect_to root_path if current_user.id != user_id
+  def redirect_check
+    redirect_to root_path if @item.user_id != current_user.id || @item.order.present?
   end
 
   def set_item
